@@ -11,6 +11,8 @@ builder.Services.AddScoped<LibrayService>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApiDocument();
 builder.Services.AddCors();
+builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<MyExceptionHandler>();
 
 var app = builder.Build();
 
@@ -28,6 +30,8 @@ using (var scope = app.Services.CreateScope())
                 });
         }
 }
+
+app.UseExceptionHandler();
 
 app.UseCors(config => config
         .AllowAnyOrigin()
