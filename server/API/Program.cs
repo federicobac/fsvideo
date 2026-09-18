@@ -9,6 +9,8 @@ builder.Services.AddScoped<MyDatabaseConnection>(_ => new MyDatabaseConnection(o
 
 builder.Services.AddScoped<LibrayService>();
 builder.Services.AddControllers();
+builder.Services.AddOpenApiDocument();
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -27,6 +29,15 @@ using (var scope = app.Services.CreateScope())
         }
 }
 
+app.UseCors(config => config
+        .AllowAnyOrigin()
+        .AllowAnyMethod()
+        .AllowAnyHeader()
+        .SetIsOriginAllowed(_ => true));
+
 app.MapControllers();
+
+app.UseOpenApi();
+app.UseSwaggerUi();
 
 app.Run();
