@@ -27,7 +27,7 @@ export function App() {
        MyApi.createBook.libraryCreateBook({
            BookTitle: newBookTitle,
            AuthorId: "1",
-           NumberOfPages: -1,
+           NumberOfPages: 100,
        }).then(r => {
            const duplicate = [...books, r.data];
            setBooks(duplicate);
