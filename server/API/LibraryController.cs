@@ -8,4 +8,11 @@ public class LibraryController(LibraryService service) : ControllerBase
     {
         return service.GetBooks(page, resultsPerPage);
     }
+
+    [HttpPost(nameof(CreateBook))]
+    public BookDto CreateBook(CreateBookRequestDto dto)
+    {
+        return service.CreateBook(dto);
+    }
+
 }

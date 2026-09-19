@@ -3,21 +3,20 @@ import "./index.css";
 
 import logo from "./logo.svg";
 import reactLogo from "./react.svg";
-import {Api, Book} from "../Api.ts";
+import {Api, BookDto} from "../Api.ts";
 import {useEffect, useState} from "react";
 
 const MyApi = new Api();
 
 export function App() {
     
-    const [books, setBooks] = useState<Book[]>([]);
+    const [books, setBooks] = useState<BookDto[]>([]);
     
     useEffect(() => {
         MyApi.getBooks.libraryGetBooks().then(r => {
             const data = r.data;
             setBooks(data);
-            const b = data[0]!;
-            b.author?.authorId
+            
         })
     }, []);
     

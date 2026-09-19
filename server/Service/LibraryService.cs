@@ -22,4 +22,17 @@ public class LibraryService(MyDatabaseConnection db)
             })
             .ToList();
     }
+
+    public BookDto CreateBook(CreateBookRequestDto dto)
+    {
+        var b = new Book()
+        {
+            NumberOfPages = dto.NumberOfPages,
+            BookTitle = dto.BookTitle,
+            BookId = Guid.NewGuid().ToString(),
+            AuthorId = dto.AuthorId
+        };
+        db.Insert(b);
+        return new BookDto(b);
+    }
 }
