@@ -4,7 +4,7 @@ using LinqToDB;
 
 public class LibraryService(MyDatabaseConnection db)
 { 
-    public List<Book> GetBooks(int page, int resultsPerPage)
+    public List<BookDto> GetBooks(int page, int resultsPerPage)
     {
         if(page < 1)
             throw new ValidationException("Page must be 1 or higher");
@@ -16,6 +16,10 @@ public class LibraryService(MyDatabaseConnection db)
             .ThenLoad(a => a.BooksWrittenByAuthor)
             .Take(resultsPerPage)
             .Skip((page-1)*resultsPerPage)
+            .Select(b => new BookDto(b)
+            {
+                Author = new AuthorDto(b.Author)
+            })
             .ToList();
     }
 }

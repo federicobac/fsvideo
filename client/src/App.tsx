@@ -16,6 +16,8 @@ export function App() {
         MyApi.getBooks.libraryGetBooks().then(r => {
             const data = r.data;
             setBooks(data);
+            const b = data[0]!;
+            b.author?.authorId
         })
     }, []);
     

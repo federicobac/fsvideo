@@ -10,11 +10,18 @@
  * ---------------------------------------------------------------
  */
 
-export interface Book {
+export interface BookDto {
+  author?: AuthorDto;
   bookId?: string;
   bookTitle?: string;
   /** @format int32 */
   numberOfPages?: number;
+  authorId?: string;
+}
+
+export interface AuthorDto {
+  authorId?: string;
+  authorName?: string;
 }
 
 export type QueryParamsType = Record<string | number, any>;
@@ -288,10 +295,19 @@ export class Api<
      * @name LibraryGetBooks
      * @request GET:/GetBooks
      */
-    libraryGetBooks: (params: RequestParams = {}) =>
-      this.request<Book[], any>({
+    libraryGetBooks: (
+      query?: {
+        /** @format int32 */
+        page?: number;
+        /** @format int32 */
+        resultsPerPage?: number;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BookDto[], any>({
         path: `/GetBooks`,
         method: "GET",
+        query: query,
         format: "json",
         ...params,
       }),
