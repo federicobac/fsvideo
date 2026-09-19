@@ -312,4 +312,29 @@ export class Api<
         ...params,
       }),
   };
+  createBook = {
+    /**
+     * No description
+     *
+     * @tags Library
+     * @name LibraryCreateBook
+     * @request POST:/CreateBook
+     */
+    libraryCreateBook: (
+      query?: {
+        BookTitle?: string;
+        /** @format int32 */
+        NumberOfPages?: number;
+        AuthorId?: string;
+      },
+      params: RequestParams = {},
+    ) =>
+      this.request<BookDto, any>({
+        path: `/CreateBook`,
+        method: "POST",
+        query: query,
+        format: "json",
+        ...params,
+      }),
+  };
 }

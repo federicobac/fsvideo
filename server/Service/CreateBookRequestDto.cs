@@ -1,6 +1,5 @@
-﻿public class CreateBookRequestDto
-{
-    public string BookTitle { get; set; }
-    public int NumberOfPages { get; set; }
-    public string AuthorId { get; set; }
-}
+﻿using Facet;
+using Infra;
+
+[Facet(sourceType:typeof(Book), exclude: [nameof(Book.Author), nameof(Book.BookId)])]
+public partial class CreateBookRequestDto;
