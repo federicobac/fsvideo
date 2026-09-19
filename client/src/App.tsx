@@ -5,6 +5,7 @@ import logo from "./logo.svg";
 import reactLogo from "./react.svg";
 import {Api, type BookDto} from "../Api.ts";
 import {useEffect, useState} from "react";
+import toast from "react-hot-toast";
 
 const MyApi = new Api();
 
@@ -26,10 +27,12 @@ export function App() {
        MyApi.createBook.libraryCreateBook({
            BookTitle: newBookTitle,
            AuthorId: "1",
-           NumberOfPages: 100,
+           NumberOfPages: -1,
        }).then(r => {
            const duplicate = [...books, r.data];
            setBooks(duplicate);
+       }).catch(e => {
+           toast(e.error.title)
        })
     }
 

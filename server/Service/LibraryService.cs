@@ -25,6 +25,9 @@ public class LibraryService(MyDatabaseConnection db)
 
     public BookDto CreateBook(CreateBookRequestDto dto)
     {
+        if(dto.NumberOfPages<1)
+            throw new ValidationException("Number of pages must be 1 or higher");
+        
         var b = new Book()
         {
             NumberOfPages = dto.NumberOfPages,
