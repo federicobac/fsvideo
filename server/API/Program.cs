@@ -7,7 +7,7 @@ var option = new DataOptions<MyDatabaseConnection>(
         new DataOptions().UseSQLite("Data Source=db.db"));
 builder.Services.AddScoped<MyDatabaseConnection>(_ => new MyDatabaseConnection(option));
 
-builder.Services.AddScoped<LibrayService>();
+builder.Services.AddScoped<LibraryService>();
 builder.Services.AddControllers();
 builder.Services.AddOpenApiDocument();
 builder.Services.AddCors();
@@ -20,13 +20,25 @@ using (var scope = app.Services.CreateScope())
 {
         var db = scope.ServiceProvider.GetRequiredService<MyDatabaseConnection>();
         db.CreateTable<Book>(tableOptions: TableOptions.CreateIfNotExists);
+        db.CreateTable<Author>(tableOptions: TableOptions.CreateIfNotExists);
+        
+        if (db.Authors.Count() == 0)
+        {
+                db.Insert(new Author() 
+                {
+                        AuthorId = "1",
+                        AuthorName = "bob"
+                });
+        }
+        
         if (db.Books.Count() == 0)
         {
                 db.Insert(new Book() 
                 {
                         BookId = "1",
                         BookTitle = "book 1",
-                        NumberOfPages = 100
+                        NumberOfPages = 100,
+                        AuthorId = "1"
                 });
         }
 }

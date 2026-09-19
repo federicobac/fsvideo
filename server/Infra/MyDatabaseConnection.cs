@@ -9,4 +9,6 @@ public class MyDatabaseConnection : DataConnection
     }
 
     public ITable<Book> Books => this.GetTable<Book>();
+    public ITable<Author> Authors => this.GetTable<Author>();
+
 }

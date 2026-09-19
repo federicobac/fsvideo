@@ -1,8 +1,22 @@
-﻿namespace Infra;
+﻿using LinqToDB.Mapping;
+
+namespace Infra;
 
 public class Book
 {
-    public string BookId { get; set; }
+    [PrimaryKey] public string BookId { get; set; }
     public string BookTitle { get; set; }
     public int NumberOfPages { get; set; }
+    public string AuthorId { get; set; }
+    [Association(ThisKey = nameof(AuthorId), OtherKey = nameof(Author.AuthorId))]
+    public Author Author { get; set; }
+}
+        
+public class Author
+{
+    [PrimaryKey]
+    public string AuthorId { get; set; }
+    public string AuthorName { get; set; }
+    [Association(ThisKey = nameof(AuthorId), OtherKey = nameof(Book.BookId))]
+    public List<Book> BooksWrittenByAuthor { get; set; } 
 }

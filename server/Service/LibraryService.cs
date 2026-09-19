@@ -1,7 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using Infra;
+using LinqToDB;
 
-public class LibrayService(MyDatabaseConnection db)
+public class LibraryService(MyDatabaseConnection db)
 { 
     public List<Book> GetBooks(int page, int resultsPerPage)
     {
@@ -11,6 +12,9 @@ public class LibrayService(MyDatabaseConnection db)
             throw new ValidationException("Must have 1 or more results per page");
         
         return db.Books.Take(resultsPerPage)
+            .LoadWith(b => b.Author)
+            .ThenLoad(a => a.BooksWrittenByAuthor)
+            .Take(resultsPerPage)
             .Skip((page-1)*resultsPerPage)
             .ToList();
     }
